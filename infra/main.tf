@@ -2,8 +2,8 @@ provider "aws" {
   region                   = "us-east-1"
   shared_credentials_files = ["/Users/kalyangadde/.aws/credentials"]
 }
-/*
 
+/*
 data "aws_vpc" "existing_vpc" {
   filter {
     name   = "tag:Name"       # Search by the "Name" tag
@@ -34,9 +34,39 @@ data "aws_security_group" "existing_sg" {
   }
   vpc_id = data.aws_vpc.existing_vpc.id
 }
-
-
 */
+
+data "aws_vpc" "existing_vpc" {
+  filter {
+    name   = "tag:Name"       # Search by the "Name" tag
+    values = [var.vpc_name]  # Replace with your actual VPC name
+  }
+}
+
+data "aws_subnet" "private_subnet_1" {
+  filter {
+    name   = "tag:Name"
+    values = [var.private_subnet_1]  # Replace with actual subnet name
+  }
+  vpc_id = data.aws_vpc.existing_vpc.id
+}
+
+data "aws_subnet" "private_subnet_2" {
+  filter {
+    name   = "tag:Name"
+    values = [var.private_subnet_2]  # Replace with actual subnet name
+  }
+  vpc_id = data.aws_vpc.existing_vpc.id
+}
+
+data "aws_security_group" "existing_sg" {
+  filter {
+    name   = "tag:Name"
+    values = [var.existing_sg]  # Replace with actual security group name
+  }
+  vpc_id = data.aws_vpc.existing_vpc.id
+}
+
 resource "aws_iam_role" "lambda_role" {
  name   = "terraform_aws_lambda_role"
  assume_role_policy = <<EOF

@@ -3,6 +3,25 @@ variable "bucket_name" {
   description = "Remote state bucket name"
 }
 
+variable "vpc_name" {
+  type        = string
+  description = "AWS Lambda VPC Name"
+}
+
+variable "private_subnet_1" {
+  type        = string
+  description = "Private Subnet 1"
+}
+
+variable "private_subnet_2" {
+  type        = string
+  description = "Private Subnet 2"
+}
+variable "existing_sg" {
+  type        = string
+  description = "Security Group"
+}
+
 /*
 variable "vpc_cidr" {
   type        = string
