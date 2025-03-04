@@ -169,11 +169,11 @@ resource "aws_lambda_function" "terraform_lambda_func" {
  source_code_hash               = data.archive_file.zip_the_python_code.output_base64sha256
 
  publish = true  # This ensures a new Lambda version is created when changes occur
-/*
+
  vpc_config {
     subnet_ids         = [data.aws_subnet.private_subnet_1.id, data.aws_subnet.private_subnet_2.id]
     security_group_ids = [data.aws_security_group.existing_sg.id]
-  }*/
+  }
 }
 
 
